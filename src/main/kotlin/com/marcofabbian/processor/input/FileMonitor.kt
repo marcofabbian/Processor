@@ -15,13 +15,13 @@ import kotlin.math.abs
 class FileMonitor(
     private val config:FileMonitorConfig
 ) {
-    private val monitor = FileAlterationMonitor(10000)
+    private val monitor = FileAlterationMonitor(config.interval)
     private var files = mutableListOf<File>()
 
     fun run(function:(file:File)->Unit) {
         var time = LocalTime.now()
         var difference = 0
-        var observer = FileAlterationObserver(File(config.sourcePath), NotFileFilter(NameFileFilter(".DS_Store")), IOCase.INSENSITIVE)
+        var observer = FileAlterationObserver(File(config.path), NotFileFilter(NameFileFilter(".DS_Store")), IOCase.INSENSITIVE)
         monitor.start()
         monitor.addObserver(observer)
         observer.addListener(object: FileAlterationListenerAdaptor(){
