@@ -33,9 +33,8 @@ class FileMonitor(
                 }
             }
         })
-        while (difference < 4) {
+        while (abs(time.minute - LocalTime.now().minute) < 4) {
             // While condition
-            difference = abs(time.minute -LocalTime.now().minute)
         }
         monitor.stop()
     }

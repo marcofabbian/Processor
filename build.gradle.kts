@@ -22,6 +22,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("commons-io:commons-io:2.7")
+	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("ch.qos.logback:logback-core:1.5.12")
+	implementation("ch.qos.logback:logback-classic:1.5.12")
+	implementation("ch.qos.logback:logback-access:1.5.12")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
