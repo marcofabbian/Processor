@@ -17,7 +17,7 @@ data class Batch(private val payload: File) {
         private set
     lateinit var date: LocalDateTime
         private set
-    lateinit var transactions:List<Document>
+    lateinit var xmlDocuments:List<Document>
         private set
 
     init {
@@ -43,7 +43,7 @@ data class Batch(private val payload: File) {
                 }
             }
         }
-        transactions = list
+        xmlDocuments = list
     }
 
     private fun generateModularUID(input: String): String {

@@ -1,0 +1,8 @@
+2024-12-18 00:29:58 [INFO] - Starting ProcessorAppKt using Java 17.0.8 with PID 7330 (/Users/marcofabbian/Documents/sources/processor/build/classes/kotlin/main started by marcofabbian in /Users/marcofabbian/Documents/sources/processor)
+2024-12-18 00:29:58 [INFO] - No active profile set, falling back to 1 default profile: "default"
+2024-12-18 00:29:58 [INFO] - File message.xml
+2024-12-18 00:29:58 [INFO] - BatchId : 1062795688942935
+2024-12-18 00:29:58 [INFO] - Transactions  : 3
+2024-12-18 00:29:58 [INFO] - Transaction : 20241208-DVCA001
+2024-12-18 00:29:58 [INFO] - Transaction : MERG202412080001
+2024-12-18 00:29:58 [INFO] - Transaction : LIQ12345678
