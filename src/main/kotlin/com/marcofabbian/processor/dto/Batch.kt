@@ -10,20 +10,30 @@ import java.time.LocalDateTime
 import org.xml.sax.InputSource
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
+import kotlinx.serialization.*
 
-data class Batch(private val payload: File) {
+@Serializable
+data class Batch(
+    private val payload: File
+) {
 
+    @SerialName("batchId")
     lateinit var batchId:String
         private set
-    lateinit var date: LocalDateTime
+
+    @SerialName("processing")
+    lateinit var processing: LocalDateTime
         private set
     lateinit var xmlDocuments:List<Document>
+        private set
+    @SerialName("transactionNumber")
+    var transactionNumber:Int = -1
         private set
 
     init {
         batchId = generateModularUID(payload.readText())
 
-        date = LocalDateTime.now()
+        processing = LocalDateTime.now()
 
         var transaction = ""
         val builder = DocumentBuilderFactory
@@ -44,6 +54,8 @@ data class Batch(private val payload: File) {
             }
         }
         xmlDocuments = list
+
+        transactionNumber = list.count()
     }
 
     private fun generateModularUID(input: String): String {

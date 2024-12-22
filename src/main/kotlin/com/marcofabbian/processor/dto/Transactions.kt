@@ -1,4 +1,5 @@
 package com.marcofabbian.processor.dto
+
 import java.time.LocalDateTime
 
 class BankAccount(
@@ -25,25 +26,32 @@ class BankAccount(
 }
 abstract class Transaction(
     val messageId:String,
+    val batchId:String,
     val creation:LocalDateTime,
     val creditAccount:BankAccount,
     val debitAccount:BankAccount,
 )
+
 class Dividend(
     messageId:String,
+    batchId:String,
     creation:LocalDateTime,
     creditAccount:BankAccount,
     debitAccount:BankAccount,
-) : Transaction(messageId,creation, creditAccount, debitAccount)
+) : Transaction(messageId, batchId, creation, creditAccount, debitAccount)
+
 class Merger(
     messageId:String,
+    batchId:String,
     creation:LocalDateTime,
     creditAccount:BankAccount,
     debitAccount:BankAccount,
-) : Transaction(messageId,creation, creditAccount, debitAccount)
+) : Transaction(messageId, batchId, creation, creditAccount, debitAccount)
+
 class Liquidation(
     messageId:String,
+    batchId:String,
     creation:LocalDateTime,
     creditAccount:BankAccount,
     debitAccount:BankAccount,
-) : Transaction(messageId,creation, creditAccount, debitAccount)
+) : Transaction(messageId, batchId, creation, creditAccount, debitAccount)

@@ -22,11 +22,25 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("commons-io:commons-io:2.7")
+
+	//Xml
 	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+	//Logback
 	implementation("ch.qos.logback:logback-core:1.5.12")
 	implementation("ch.qos.logback:logback-classic:1.5.12")
 	implementation("ch.qos.logback:logback-access:1.5.12")
+
+	//Mongo DB
+	implementation("org.springframework.data:spring-data-mongodb:4.4.1")
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+	//Json
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.3")
+	implementation("com.google.code.gson:gson:2.10.1")
+
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
