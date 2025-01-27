@@ -39,7 +39,7 @@ dependencies {
 
 	//Json
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.3")
-	implementation("com.google.code.gson:gson:2.10.1")
+	//implementation("com.google.code.gson:gson:2.11.0")
 
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

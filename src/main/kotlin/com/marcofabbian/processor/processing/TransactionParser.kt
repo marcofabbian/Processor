@@ -17,15 +17,14 @@ import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 
 @Component
-class TransactionParser(
-) {
-    fun parse(doc:Document): Transaction {
+class TransactionParser {
+    fun parse(batchId:String, doc:Document): Transaction {
         return if(doc.isDividend()){
-            mapToTransaction(mapDocumentToDto(doc, XmlDividend::class.java) as Object)
+            mapToTransaction(batchId, mapDocumentToDto(doc, XmlDividend::class.java) as Object)
         } else if(doc.isLiquidation()) {
-            mapToTransaction(mapDocumentToDto(doc, XmlLiquidation::class.java) as Object)
+            mapToTransaction(batchId, mapDocumentToDto(doc, XmlLiquidation::class.java) as Object)
         } else if(doc.isMerger()) {
-            mapToTransaction(mapDocumentToDto(doc, XmlMerger::class.java) as Object)
+            mapToTransaction(batchId, mapDocumentToDto(doc, XmlMerger::class.java) as Object)
         } else
             throw Exception("Transaction not managed.")
     }
@@ -48,13 +47,14 @@ fun <T> mapDocumentToDto(document: Document, dtoClass: Class<T>): T {
     return xmlMapper.readValue(xmlString, dtoClass)
 }
 
-fun mapToTransaction(data:Object): Transaction {
+fun mapToTransaction(batchId:String, data:Object): Transaction {
     when(data.javaClass.simpleName) {
         XmlDividend::class.simpleName -> {
             val details = (data as XmlDividend).notification?.notificationDetails !!
             val header = (data as XmlDividend).notification?.groupHeader !!
             return Dividend(
                 header.messageId !!,
+                batchId,
                 LocalDateTime.parse(header.creationDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")),
                 BankAccount(details.entry?.entryDetails?.transactionDetails?.relatedParties?.creditorAccount?.id?.iban!!),
                 BankAccount(details.entry?.entryDetails?.transactionDetails?.relatedParties?.debtorAccount?.id?.iban!!)
@@ -65,6 +65,7 @@ fun mapToTransaction(data:Object): Transaction {
             val details = (data as XmlLiquidation).securitiesTransfer !!
             return Liquidation(
                 header.statementId,
+                batchId,
                 LocalDateTime.parse(header.creationDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")),
                 BankAccount(details.relatedParties?.debtorAccount?.accountId?.iban !!),
                 BankAccount(details.relatedParties?.creditorAccount?.accountId?.iban !!)
@@ -75,6 +76,7 @@ fun mapToTransaction(data:Object): Transaction {
             val creation = LocalDate.parse(details.eventDetails.date, DateTimeFormatter.ofPattern("yyyy-MM-dd")) !!
             return Merger(
                 details.notificationId !!,
+                batchId,
                 LocalDateTime.of(creation, LocalTime.now()),
                 BankAccount("IT60X0542811101000000123456"),
                 BankAccount("IT60X0542811101000000123456")

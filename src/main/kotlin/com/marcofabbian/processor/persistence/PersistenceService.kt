@@ -1,7 +1,6 @@
 package com.marcofabbian.processor.persistence
 
-import com.marcofabbian.processor.dto.Batch
-import com.marcofabbian.processor.dto.Transaction
+import com.marcofabbian.processor.dto.*
 import org.springframework.stereotype.Service
 
 @Service

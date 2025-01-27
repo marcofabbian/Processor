@@ -8,6 +8,7 @@ import org.apache.commons.io.monitor.FileAlterationMonitor
 import org.apache.commons.io.monitor.FileAlterationObserver
 import org.springframework.stereotype.Component
 import java.io.File
+import java.nio.file.Path
 import java.time.LocalTime
 import kotlin.math.abs
 
@@ -20,16 +21,16 @@ class FileMonitor(
 
     fun run(function:(file:File)->Unit) {
         var time = LocalTime.now()
-        var difference = 0
         var observer = FileAlterationObserver(File(config.path), NotFileFilter(NameFileFilter(".DS_Store")), IOCase.INSENSITIVE)
         monitor.start()
         monitor.addObserver(observer)
         observer.addListener(object: FileAlterationListenerAdaptor(){
             override fun onFileCreate(file: File?) {
                 if(file != null && !files.contains(file)){
-                    super.onFileCreate(file)
-                    files.add(file)
-                    function(file)
+                    val newFile = move(file)
+                    super.onFileCreate(newFile)
+                    files.add(newFile)
+                    function(newFile)
                 }
             }
         })
@@ -39,5 +40,10 @@ class FileMonitor(
         monitor.stop()
     }
 
-    fun remove(file:File) = files.remove(file)
+    fun move(file:File):File {
+        val newFileName = Path.of(config.inProgressPath, file.name).toString()
+        val newFile = File(newFileName)
+        file.copyTo(newFile, true)
+        return newFile
+    }
 }
